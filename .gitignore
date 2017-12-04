@@ -1,0 +1,8 @@
+.vscode
+.env
+downloaded
+__pycache__
+unitest.py
+.DS_Store
+testID.json
+lr_cover.log

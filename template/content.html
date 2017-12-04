@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf"
+         version="3.0"
+         unique-identifier="BookId"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xml:lang="en"
+         xmlns:media="http://www.idpf.org/epub/vocab/overlays/#"
+         prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/">
+
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
+              xmlns:opf="http://www.idpf.org/2007/opf">
+
+              <dc:identifier id="BookId">{{ BookId }}</dc:identifier>
+              <meta refines="#BookId" property="identifier-type" scheme="onix:codelist5">22</meta>
+              <meta property="dcterms:identifier" id="meta-identifier">BookId</meta>
+              <dc:title>{{ title|e }}</dc:title>
+              <meta property="dcterms:title" id="meta-title">{{ title|e }}</meta>
+              <dc:language>en</dc:language>
+              <meta property="dcterms:language" id="meta-language">en</meta>
+              <meta property="dcterms:modified">2017-11-07T03:28:33Z</meta>
+              <dc:creator id="creator">{{ creator }}</dc:creator>
+              <meta refines="#creator" property="file-as">{{ creator|e }}</meta>
+              <meta property="dcterms:publisher">{{ publisher|e }}</meta>
+              <dc:publisher>{{ publisher|e }}</dc:publisher>
+              
+              <meta property="dcterms:date">2017-11-7</meta>
+              <dc:date>2017-11-7</dc:date>
+              <meta property="dcterms:rights">All rights reserved</meta>
+              <dc:rights>{{ rights|e }}</dc:rights>
+              <meta name="cover" content="image_cover"/>
+              <meta name="generator" content="epub-nicohaenggi" />
+              <meta property="ibooks:specified-fonts">true</meta>
+
+    </metadata>
+
+    <manifest>
+        <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+        <item id="css" href="styles/_website.css" media-type="text/css" />
+        <item id="image_cover" href="images/{{ cover }}" media-type="image/jpg" />
+        <item id="css" href="styles/_website.css" media-type="text/css" />
+        {% for item in css %}
+        <item id="css" href="styles/{{ item }}" media-type="text/css" /> 
+        {% endfor %}
+        
+
+        {% for item in images %}
+        <item id="image_{{ loop.index0 }}" href="images/{{ item }}" media-type="image/png" />
+        {%- endfor -%}
+
+        {% for item in chapters %}
+        <item id="{{ loop.index0 }}" href="{{ item.filename }}" media-type="application/xhtml+xml" />
+        {%- endfor %}
+
+    </manifest>
+
+    <spine toc="ncx">
+        {% for item in chapters %}
+        <itemref idref="{{ loop.index0 }}"/>
+        {%- endfor %}
+    </spine>
+    <guide>
+      <reference type="text" title="Table of Content" href="{{ chapters[1].filename }}"/>
+    </guide>
+</package>

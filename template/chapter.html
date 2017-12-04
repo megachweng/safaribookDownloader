@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>
+    {{ title|e }}
+  </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="styles/_website.css" rel="stylesheet" type="text/css" /> 
+  {% for item in css %}
+  <link href="styles/{{ item }}" rel="stylesheet" type="text/css" /> {% endfor %} 
+  {% if head_extra %}
+  {{ head_extra }}
+  {% endif %}
+</head>
+<body>
+  {{ body }}
+</body>
+
+</html>
