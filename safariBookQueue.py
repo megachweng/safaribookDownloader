@@ -251,7 +251,7 @@ class Downloader:
 
 
 class Writer:
-    def __init__(self, input_path="Downloaded", output_path="Output", logedSession=None):
+    def __init__(self, input_path="Downloaded", output_path="Output", logedSession=None, proxies=None):
         pathlib.Path(output_path).mkdir(parents=True, exist_ok=True)
         self.tasks = [dir for dir in os.listdir(
             input_path) if not dir.startswith(".")]
@@ -261,6 +261,7 @@ class Writer:
         self.output_path = output_path
         self.loadTemplate()
         self.session = logedSession
+        self.proxies = proxies
 
     def loadTemplate(self):
         templateLoader = jinja2.FileSystemLoader(searchpath="template")
@@ -283,7 +284,7 @@ class Writer:
             api = json.load(open(os.path.join(_bookPath, 'dev', 'META.json')))[
                 'baseAPI']
             res = self.session.get(
-                api + "chapter-content/" + retrivingFile, timeout=10)
+                api + "chapter-content/" + retrivingFile, timeout=10, proxies=self.proxies)
             soup = BeautifulSoup(res.text.encode('utf-8'), 'lxml')
 
         outputChapter = self.chapterTPL.render({
